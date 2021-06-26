@@ -45,6 +45,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-surround'
+Plug 'tell-k/vim-autopep8'
 "Plug 'edkolev/tmuxline.vim'
 " Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end() 
@@ -244,18 +245,24 @@ endfunc
 
 hi MatchParen ctermbg=Yellow guibg=lightblue
 highlight PMenu ctermfg=0 ctermbg=100
-noremap  <F2> :NERDTreeToggle<cr>
-inoremap <F2> <esc>:NERDTreeToggle<cr>
 
-augroup ps_nerdtree
-    au!
 
-    au Filetype nerdtree setlocal nolist
-    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
-    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
-    " au Filetype nerdtree nnoremap <buffer> K :q<cr>
-augroup END
+let g:autopep8_disable_show_diff=1
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
 
+"""""""""""""""""""""""""NERDTree config"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" noremap  <F2> :NERDTreeToggle<cr>
+" inoremap <F2> <esc>:NERDTreeToggle<cr>
+"
+" augroup ps_nerdtree
+"     au!
+"
+"     au Filetype nerdtree setlocal nolist
+"     au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+"     au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+"     " au Filetype nerdtree nnoremap <buffer> K :q<cr>
+" augroup END
+"
 " let NERDTreeBookmarksFile = expand("$HOME/.vim/NERDTreeBookmarks")
 " let NERDTreeHighlightCursorline = 1
 " let NERDTreeIgnore = ['\~$', '.*\.pyo$', '.*\.pyc$', 'pip-log\.txt$',
