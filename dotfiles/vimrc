@@ -1,0 +1,269 @@
+
+""""""""""""""""""""""""""""""VIM CONFIG"""""""""""""""""""""""""""""""
+syntax enable
+syntax on 
+set hlsearch
+set number
+filetype plugin on
+"set tags=tags;
+"set autochdir
+"set cursorline
+"
+"折叠功能
+"set fdm=syntax
+"set foldlevelstart=99       " 打开文件是默认不折叠代码
+autocmd FileType c,cpp,java  set formatoptions=croql noai tabstop=4 expandtab shiftwidth=4 cindent cinoptions=>s,e0,n0,f0,{0,}0,^0,:s,=s comments=sr:/*,mb:*,el:*/,://
+
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+
+let g:SuperTabRetainCompletionType=2
+let g:winManagerWindowLayout='FileExplorer|TagList'
+nmap wm :WMToggle<cr>
+map <c-x> : wq <cr>
+
+" stty -ixon 需要在bashrc_me文件中加入
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+inoremap <C-S>     <esc>:w<cr>
+nnoremap <C-S>     :w<cr>
+nnoremap <silent> <leader>q :qa! <cr>
+
+" inoremap ) ("");<ESC>hhi
+" inoremap ( ()<ESC>i
+" inoremap [ []<ESC>i
+" inoremap { {}<ESC>i
+
+"=================================================================
+call plug#begin('~/.vim/plugged')
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/seoul256.vim'
+" Plug 'ycm-core/YouCompleteMe'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdcommenter'
+Plug 'tpope/vim-surround'
+"Plug 'edkolev/tmuxline.vim'
+" Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+call plug#end() 
+
+""""""""""""""""""""""NERD CONFIG """""""""""""""""""""
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+
+" Enable NERDCommenterToggle to check all selected lines is commented or not
+let g:NERDToggleCheckAllLines = 1
+
+
+""""""""""""""""""""""TMUX LINE CONFIG""""""""""""""""
+
+""""""""""""""""""""""STATUS LINE CONFIG""""""""""""""""
+" Plugin 'git://github.com/edkolev/tmuxline.vim.git'
+set laststatus=2
+let g:airline#extensions#tabline#enabled=1
+let g:airline#extensions#whitespace#enabled=0
+"let g:airline_powerline_fonts = 1
+"let g:airline_theme='ayu_mirage'
+" let g:airline_theme='dark'
+"let g:airline_theme='molokai' 
+
+
+""""""""""""""""COLOR CONFIG""""""""""""""""""""""""""""
+"let base16colorspace=256
+"colorscheme base16-default-dark
+"color darkblue
+"color desert
+"colorscheme default
+"
+"" Unified color scheme (default: dark)
+
+"" range 233 (darkest) ~ 239 (lightest)
+let g:seoul256_background=233 
+color seoul256
+" seoul256 (light):
+" "   Range:   252 (darkest) ~ 256 (lightest)
+" "   Default: 253
+" let g:seoul256_background = 256
+" colo seoul256-light
+"
+" " Switch
+" set background=dark
+" set background=light
+
+
+"""""""""""""""""""""""FZF CONFIG"""""""""""""""""""""""
+let g:fzf_action = {'ctrl-t': 'tab split'}
+map <c-f> : FZF <cr>
+inoremap <c-f> <ESC>>:FZF <cr>
+map <c-h> : History<cr>
+inoremap <c-h> <ESC>>:History<cr>
+
+augroup fzfag
+	autocmd Filetype sh map <c-e> :Ag <CR>
+	autocmd Filetype c map <c-e> :Ag <CR>
+	autocmd Filetype cpp map <c-e> :Ag <CR>
+	autocmd Filetype python map <c-e> :Ag <CR>
+augroup END
+
+augroup fzfbuff
+	autocmd Filetype sh map <c-b> :Buffers <CR>
+	autocmd Filetype c map <c-b> :Buffers <CR>
+	autocmd Filetype cpp map <c-b> :Buffers<CR>
+	autocmd Filetype python map <c-b> :Buffers<CR>
+augroup END
+
+augroup fzfline
+	autocmd Filetype sh map <c-l> :Lines<CR>
+	autocmd Filetype c map <c-l> :Lines<CR>
+	autocmd Filetype cpp map <c-l> :Lines<CR>
+	autocmd Filetype python map <c-l> :Lines<CR>
+augroup END
+
+
+"""""""""""""""""""""""YCM CONFIG """"""""""""""""""""""
+let g:ycm_min_num_identifier_candidate_chars = 4
+let g:ycm_min_num_of_chars_for_completion = 2 "set 99 to turn off identifiers completer"
+let g:ycm_max_num_identifier_candidates = 10 "identifier completion"
+let g:ycm_max_num_candidates = 30 "semantic completion"
+let g:ycm_auto_trigger = 1
+let g:ycm_key_list_stop_completion = ['<C-y>']
+let g:ycm_server_python_interpreter='/usr/bin/python3'
+" let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/.ycm_extra_conf.py' "used for c-family language"
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>*'
+let g:ycm_key_invoke_completion = '<c-l>'
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Let clangd fully control code completion
+let g:ycm_clangd_uses_ycmd_caching = 0
+" " Use installed clangd, not YCM-bundled clangd which doesn't get updates.
+let g:ycm_clangd_binary_path = exepath("clangd")
+
+
+nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<cr>  
+nnoremap <leader>yi :YcmCompleter GoToInclude<cr>
+nnoremap <leader>yc :YcmCompleter GoToDeclaration<cr>
+nnoremap <leader>yd :YcmCompleter GoToDefinition<cr>
+nnoremap <leader>yg :YcmCompleter GoTo<cr>
+nnoremap <leader>yt :YcmCompleter GetType<cr>
+nnoremap <leader>yp :YcmCompleter GetParent<cr>
+nmap yf :YcmCompleter Format<cr>
+nmap <F4> :YcmDiags<CR>
+
+
+
+""""""""""""""""""""""""""""""""""""""""C语言的编译运行"""""""""""""""""""""""""""""""""""""""""
+" <F5>编译C/py语言，<F6>运行
+augroup ccompile
+    autocmd Filetype c map <F5> <Esc>:w<CR>:!gcc % -std=c99 -g -o %< -lm <CR>
+    autocmd Filetype cpp map <F5> <Esc>:w<CR>:!g++ % -std=c++11 -g -o %< -lm <CR>
+    autocmd Filetype python map <F5> <Esc>:w<CR>:!python % <CR>
+augroup END
+
+augroup crun
+    autocmd Filetype c map <F6> <Esc>:! ./%< <CR>
+    autocmd Filetype cpp map <F6> <Esc>:! ./%< <CR>
+augroup END
+
+" 整行注释
+augroup comment
+    autocmd Filetype c noremap <buffer> <localleader>/ I//<Esc>
+    autocmd Filetype cpp noremap <buffer> <localleader>/ I//<Esc>
+    autocmd Filetype h noremap <buffer> <localleader>/ I//<Esc>
+augroup END
+
+augroup nocomment
+    autocmd Filetype c noremap <buffer> <localleader>. ^xx
+    autocmd Filetype cpp noremap <buffer> <localleader>. ^xx
+    autocmd Filetype h noremap <buffer> <localleader>. ^xx
+augroup END
+
+augroup ccdebug
+    autocmd Filetype c map <F7> <Esc>:!gcc % -g -o %< <CR>:!gdb ./%< <CR>
+    autocmd Filetype cpp map <F7> <Esc>:!g++ % -g -o %< <CR>:!gdb ./%< <CR>
+augroup END
+
+augroup ctagrefresh
+    autocmd Filetype c map <F7> <Esc>:! ctags -Rbq < <CR>
+    autocmd Filetype cpp map <F7> <Esc>:!crags -Rbq < <CR>
+augroup END
+
+"""""""""""""""""""""""""自动插入文件头"""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd BufNewFile *.cpp,*.[ch],*.sh,*.java exec ":call SetTitle()"
+func SetTitle()  
+	if &filetype == 'sh' 
+		call setline(1,"\#########################################################################") 
+		call append(line("."), "\# File Name: ".expand("%")) 
+		call append(line(".")+1, "\# Author: andrew") 
+		call append(line(".")+2, "\# mail: andrew8yang@gmail.com") 
+		call append(line(".")+3, "\# Created Time: ".strftime("%c")) 
+		call append(line(".")+4, "\#########################################################################") 
+		call append(line(".")+5, "\#!/bin/bash") 
+		call append(line(".")+6, "") 
+	else 
+		call setline(1, "/*************************************************************************") 
+		call append(line("."), "    > File Name: ".expand("%")) 
+		call append(line(".")+1, "    > Author: andrew") 
+		call append(line(".")+2, "    > Mail: andrew8yang@gmail.com ") 
+		call append(line(".")+3, "    > Created Time: ".strftime("%c")) 
+		call append(line(".")+4, " ************************************************************************/") 
+		call append(line(".")+5, "")
+	endif
+	if &filetype == 'cpp'
+		call append(line(".")+6, "#include<iostream>")
+		call append(line(".")+7, "using namespace std;")
+		call append(line(".")+8, "")
+	endif
+	if &filetype == 'c'
+		call append(line(".")+6, "#include<stdio.h>")
+		call append(line(".")+7, "")
+	endif
+	autocmd BufNewFile * normal G
+endfunc 
+
+
+hi MatchParen ctermbg=Yellow guibg=lightblue
+highlight PMenu ctermfg=0 ctermbg=100
+noremap  <F2> :NERDTreeToggle<cr>
+inoremap <F2> <esc>:NERDTreeToggle<cr>
+
+augroup ps_nerdtree
+    au!
+
+    au Filetype nerdtree setlocal nolist
+    au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+    au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+    " au Filetype nerdtree nnoremap <buffer> K :q<cr>
+augroup END
+
+" let NERDTreeBookmarksFile = expand("$HOME/.vim/NERDTreeBookmarks")
+" let NERDTreeHighlightCursorline = 1
+" let NERDTreeIgnore = ['\~$', '.*\.pyo$', '.*\.pyc$', 'pip-log\.txt$',
+"                     \ '.*\.o$', 'db.db', 'tags.bak', '.*\.pdf$']
+"
+" let NERDTreeMinimalUI = 1
+" let NERDTreeDirArrows = 1
+" let NERDChristmasTree = 1
+" let NERDTreeChDirMode = 2
+" let NERDTreeMapJumpFirstChild = 'gK'
+" let NERDTreeShowBookmarks = 1

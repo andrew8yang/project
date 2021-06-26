@@ -1,0 +1,63 @@
+fag() {
+	local file
+	local line
+
+	read -r file line <<<"$(ag --nobreak --noheading $@ | fzf -0 -1 | awk -F: '{print $1, $2}')"
+
+	if [[ -n $file ]]
+	then
+		vim $file +$line
+	fi
+}
+
+# fcd - including hidden directories
+fcd() {
+	  local dir
+	    dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
+}
+fe() {
+	local files
+	IFS=$'\n' files=($(fzf-tmux --query="$1" --multi --select-1 --exit-0))
+	[[ -n "$files" ]] && ${EDITOR:-vim} "${files[@]}"
+}
+function fvi() {
+	vi $(fzf)
+}
+function fpr() {
+	#fzf --preview 'head -100 {}'
+	#fzf --preview 'cat {}'
+	fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
+                 echo {} is a binary file ||
+                 (bat --style=numbers --color=always {} ||
+                  highlight -O ansi -l {} ||
+                  coderay {} ||
+                  rougify {} ||
+                  cat {}) 2> /dev/null | head -100'
+}
+function fcdpr() {
+if [[ "$#" != 0 ]]; then
+builtin cd "$@";
+return
+fi
+while true; do
+local lsd=$(echo ".." && ls -p | grep '/$' | sed 's;/$;;')
+local dir="$(printf '%s\n' "${lsd[@]}" |
+fzf --reverse --preview '
+__cd_nxt="$(echo {})";
+__cd_path="$(echo $(pwd)/${__cd_nxt} | sed "s;//;/;")";
+echo $__cd_path;
+echo;
+ls -p --color=always "${__cd_path}";
+')"
+[[ ${#dir} != 0 ]] || return 0
+builtin cd "$dir" &> /dev/null
+done
+}
+
+alias gitlog="git log --pretty=format:'%h : %an : %ad : %s' --topo-order --graph --date=short"
+alias fsr='cd $(find ~/samba/pythonstudy/ -maxdepth 1 -type d| pick)'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias sv="sudo vim"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+stty -ixon 
