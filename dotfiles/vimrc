@@ -57,74 +57,7 @@ call plug#end()
 
 autocmd FileType python setlocal completeopt-=preview
 
-""""""""""""""""""""""NERD CONFIG """""""""""""""""""""
-" Add spaces after comment delimiters by default
-let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-let g:NERDCompactSexyComs = 1
-
-" Align line-wise comment delimiters flush left instead of following code indentation
-let g:NERDDefaultAlign = 'left'
-
-" Set a language to use its alternate delimiters by default
-let g:NERDAltDelims_java = 1
-
-" Add your own custom formats or override the defaults
-let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
-
-" Allow commenting and inverting empty lines (useful when commenting a region)
-let g:NERDCommentEmptyLines = 1
-
-" Enable trimming of trailing whitespace when uncommenting
-let g:NERDTrimTrailingWhitespace = 1
-
-" Enable NERDCommenterToggle to check all selected lines is commented or not
-let g:NERDToggleCheckAllLines = 1
-
-
-""""""""""""""""""""""TMUX LINE CONFIG""""""""""""""""
-
-""""""""""""""""""""""STATUS LINE CONFIG""""""""""""""""
-" Plugin 'git://github.com/edkolev/tmuxline.vim.git'
-set laststatus=2
-let g:airline#extensions#tabline#enabled=1
-let g:airline#extensions#whitespace#enabled=0
-"let g:airline_powerline_fonts = 1
-"let g:airline_theme='ayu_mirage'
-" let g:airline_theme='dark'
-"let g:airline_theme='molokai' 
-
-
-""""""""""""""""COLOR CONFIG""""""""""""""""""""""""""""
-"let base16colorspace=256
-"colorscheme base16-default-dark
-"color darkblue
-"color desert
-"colorscheme default
-"
-"" Unified color scheme (default: dark)
-
-"" range 233 (darkest) ~ 239 (lightest)
-let g:seoul256_background=233 
-color seoul256
-" seoul256 (light):
-" "   Range:   252 (darkest) ~ 256 (lightest)
-" "   Default: 253
-" let g:seoul256_background = 256
-" colo seoul256-light
-"
-" " Switch
-" set background=dark
-" set background=light
-
-
-"""""""""""""""""""""""FZF CONFIG"""""""""""""""""""""""
-let g:fzf_action = {'ctrl-t': 'tab split'}
-map <c-f> : FZF <cr>
-inoremap <c-f> <ESC>>:FZF <cr>
-map <c-h> : History<cr>
-" inoremap <c-h> <ESC>>:History<cr>
+"inoremap <c-h> <ESC>>:History<cr>
 
 augroup fzfag
 	autocmd Filetype sh map <c-e> :Ag <CR>
@@ -265,6 +198,23 @@ augroup ps_nerdtree
     " au Filetype nerdtree nnoremap <buffer> K :q<cr>
 augroup END
 
+
+let g:autopep8_disable_show_diff=1
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+
+"""""""""""""""""""""""""NERDTree config"""""""""""""""""""""""""""""""""""""""""""""""""""""
+" noremap  <F2> :NERDTreeToggle<cr>
+" inoremap <F2> <esc>:NERDTreeToggle<cr>
+"
+" augroup ps_nerdtree
+"     au!
+"
+"     au Filetype nerdtree setlocal nolist
+"     au Filetype nerdtree nnoremap <buffer> H :vertical resize -10<cr>
+"     au Filetype nerdtree nnoremap <buffer> L :vertical resize +10<cr>
+"     " au Filetype nerdtree nnoremap <buffer> K :q<cr>
+" augroup END
+"
 " let NERDTreeBookmarksFile = expand("$HOME/.vim/NERDTreeBookmarks")
 " let NERDTreeHighlightCursorline = 1
 " let NERDTreeIgnore = ['\~$', '.*\.pyo$', '.*\.pyc$', 'pip-log\.txt$',
