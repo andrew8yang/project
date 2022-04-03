@@ -20,6 +20,7 @@ let Tlist_Exit_OnlyWindow=1
 let g:SuperTabRetainCompletionType=2
 let g:winManagerWindowLayout='FileExplorer|TagList'
 nmap wm :WMToggle<cr>
+nmap nm :NERDTreeToggle<cr>
 map <c-x> : wq <cr>
 
 " stty -ixon 需要在bashrc_me文件中加入
@@ -41,13 +42,20 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/seoul256.vim'
 " Plug 'ycm-core/YouCompleteMe'
+" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'preservim/nerdcommenter'
 Plug 'tpope/vim-surround'
+Plug 'davidhalter/jedi-vim'
+Plug 'tell-k/vim-autopep8'
+Plug 'nvie/vim-flake8'
+
 "Plug 'edkolev/tmuxline.vim'
-" Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 call plug#end() 
+
+autocmd FileType python setlocal completeopt-=preview
 
 """"""""""""""""""""""NERD CONFIG """""""""""""""""""""
 " Add spaces after comment delimiters by default
@@ -116,7 +124,7 @@ let g:fzf_action = {'ctrl-t': 'tab split'}
 map <c-f> : FZF <cr>
 inoremap <c-f> <ESC>>:FZF <cr>
 map <c-h> : History<cr>
-inoremap <c-h> <ESC>>:History<cr>
+" inoremap <c-h> <ESC>>:History<cr>
 
 augroup fzfag
 	autocmd Filetype sh map <c-e> :Ag <CR>
@@ -176,8 +184,9 @@ nmap <F4> :YcmDiags<CR>
 " <F5>编译C/py语言，<F6>运行
 augroup ccompile
     autocmd Filetype c map <F5> <Esc>:w<CR>:!gcc % -std=c99 -g -o %< -lm <CR>
-    autocmd Filetype cpp map <F5> <Esc>:w<CR>:!g++ % -std=c++11 -g -o %< -lm <CR>
+    autocmd Filetype cpp map <F5> <Esc>:w<CR>:!pwd;./run.sh<CR>
     autocmd Filetype python map <F5> <Esc>:w<CR>:!python % <CR>
+    autocmd Filetype sh map <F5> <Esc>:w<CR>:! bash % <CR>
 augroup END
 
 augroup crun
@@ -267,3 +276,6 @@ augroup END
 " let NERDTreeChDirMode = 2
 " let NERDTreeMapJumpFirstChild = 'gK'
 " let NERDTreeShowBookmarks = 1
+"
+autocmd FileType python map   :call Flake8()
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
