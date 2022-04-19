@@ -39,7 +39,6 @@ nnoremap <silent> <leader>q :qa! <cr>
 "=================================================================
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
 Plug 'junegunn/seoul256.vim'
 " Plug 'ycm-core/YouCompleteMe'
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
@@ -59,25 +58,32 @@ autocmd FileType python setlocal completeopt-=preview
 
 "inoremap <c-h> <ESC>>:History<cr>
 
+"""""""""""""""""""""""FZF CONFIG"""""""""""""""""""""""
+"let g:fzf_action = {'ctrl-t': 'tab split'}
+map <c-f> : FZF <cr>
+inoremap <c-f> <ESC>>:FZF <cr>
+map <c-h> : History<cr>
+inoremap <c-h> <ESC>>:History<cr>
+
 augroup fzfag
-	autocmd Filetype sh map <c-e> :Ag <CR>
-	autocmd Filetype c map <c-e> :Ag <CR>
-	autocmd Filetype cpp map <c-e> :Ag <CR>
-	autocmd Filetype python map <c-e> :Ag <CR>
+        autocmd Filetype sh map <c-e> :Ag <CR>
+        autocmd Filetype c map <c-e> :Ag <CR>
+        autocmd Filetype cpp map <c-e> :Ag <CR>
+        autocmd Filetype python map <c-e> :Ag <CR>
 augroup END
 
 augroup fzfbuff
-	autocmd Filetype sh map <c-b> :Buffers <CR>
-	autocmd Filetype c map <c-b> :Buffers <CR>
-	autocmd Filetype cpp map <c-b> :Buffers<CR>
-	autocmd Filetype python map <c-b> :Buffers<CR>
+        autocmd Filetype sh map <c-b> :Buffers <CR>
+        autocmd Filetype c map <c-b> :Buffers <CR>
+        autocmd Filetype cpp map <c-b> :Buffers<CR>
+        autocmd Filetype python map <c-b> :Buffers<CR>
 augroup END
 
 augroup fzfline
-	autocmd Filetype sh map <c-l> :Lines<CR>
-	autocmd Filetype c map <c-l> :Lines<CR>
-	autocmd Filetype cpp map <c-l> :Lines<CR>
-	autocmd Filetype python map <c-l> :Lines<CR>
+        autocmd Filetype sh map <c-l> :Lines<CR>
+        autocmd Filetype c map <c-l> :Lines<CR>
+        autocmd Filetype cpp map <c-l> :Lines<CR>
+        autocmd Filetype python map <c-l> :Lines<CR>
 augroup END
 
 
