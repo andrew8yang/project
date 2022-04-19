@@ -39,6 +39,7 @@ nnoremap <silent> <leader>q :qa! <cr>
 "=================================================================
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/seoul256.vim'
 " Plug 'ycm-core/YouCompleteMe'
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
